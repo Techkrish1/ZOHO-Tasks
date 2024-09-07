@@ -33,15 +33,11 @@ class Calculation{
     }
 
     public int countOddDays(int year){
-        int noOfcencury = 0;
-        int balaceYear = year;
-        if (year >= 100){
-            noOfcencury = year / 100;
-            balaceYear = year % 100;
-        }
-        int leapyear = balaceYear / 4;
-        int oddleapyear = balaceYear - leapyear;
-        return ((leapyear * 2) + oddleapyear + (noOfcencury * 5)) % 7;
+        int noOfCenturies = year / 100;
+        int balanceYear = year % 100;
+        int leapYears = balanceYear / 4;
+        int oddLeapYears = balanceYear - leapYears;
+        return ((leapYears * 2) + oddLeapYears + (noOfCenturies * 5)) % 7;
         
     }
 
