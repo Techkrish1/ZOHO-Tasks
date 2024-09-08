@@ -32,15 +32,6 @@ class Calculation{
     }
     
 
-    public static void validationOfinputDate(int date, int month, int year){
-        if (month == 2 && date > 29){
-            System.out.println("February's date is not greater than 29");
-        }
-        if (date > 31 || month > 12 || year <= 0){
-            System.out.println("Please recheck the date you entered");
-        }
-    }
-
     public int getNearestForthCenturyLeapYear(int year){
         int nearest = 0;
         for (int start = 1; start < 25; start++){
