@@ -27,16 +27,16 @@ class Calculation{
         }
     }
 
-    public boolean isValid() {
+    public boolean isValid() {   // To check the given date or Month or Year are valid
         return isValid;
     }
     
 
-    public int getNearestForthCenturyLeapYear(int year){
+    public int getNearestForthCenturyLeapYear(int year){   // Finding  Nearest Leap year to make our calulation more easy
         int nearest = 0;
         for (int start = 1; start < 25; start++){
-            if ( (start * 400) <= year){
-                nearest = start * 400;
+            if ( (start * 400) <= year){   // Fourth Century has 0 odd days.
+                nearest = start * 400;  
             } else{
                 break;
             }
@@ -45,7 +45,7 @@ class Calculation{
         
     }
 
-    public boolean leapYear(int year){
+    public boolean leapYear(int year){ // Checking givenYear is Leap or not
         if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)){
             return true;
         }else{
@@ -53,7 +53,7 @@ class Calculation{
         }
     }
 
-    public int countOddDays(int year){
+    public int countOddDays(int year){   // After Finding Nearest Leap year subtract this to given Year (Given Year - Nearest LeapYear) and find the odd days for remaining years
         int noOfCenturies = year / 100;
         int balanceYear = year % 100;
         int leapYears = balanceYear / 4;
@@ -82,7 +82,7 @@ class Calendar {
     public Calculation calculation;
 
     public void getInputDate(String inputDate) {
-        if (inputDate.length() == 10){
+        if (inputDate.length() == 10){ // 12/10/2024 length 10 for indexing
             int givenDate = Integer.parseInt(inputDate.substring(0, 2));
             int givenMonth = Integer.parseInt(inputDate.substring(3, 5));
             int givenYear = Integer.parseInt(inputDate.substring(6, 10));
@@ -97,8 +97,8 @@ class Calendar {
 
     
 
-    public void printDayOfWeek() {
-        if (calculation != null && calculation.isValid()) {
+    public void printDayOfWeek() {  
+        if (calculation != null && calculation.isValid()) {   
             String[] nameOfTheDay = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
             int nearestLeapYear = calculation.getNearestForthCenturyLeapYear(calculation.year - 1);
@@ -106,7 +106,7 @@ class Calendar {
             int oddDays = ((calculation.year - 1) - nearestLeapYear);
             int oddDaysTillTheYearBefore = calculation.countOddDays(oddDays);
             
-            int resultDayIndex = calculation.currentYearOddDays(calculation.date,calculation.month,calculation.year, oddDaysTillTheYearBefore);
+            int resultDayIndex = calculation.currentYearOddDays(calculation.date,calculation.month,calculation.year, oddDaysTillTheYearBefore); // It will give the final Odd Day Index
             System.out.println(nameOfTheDay[resultDayIndex]);
         }
 
