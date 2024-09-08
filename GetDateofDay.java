@@ -82,18 +82,23 @@ class Calendar {
     public Calculation calculation;
 
     public void getInputDate(String inputDate) {
+        if (inputDate.length() == 10){
+            int givenDate = Integer.parseInt(inputDate.substring(0, 2));
+            int givenMonth = Integer.parseInt(inputDate.substring(3, 5));
+            int givenYear = Integer.parseInt(inputDate.substring(6, 10));
 
-        int givenDate = Integer.parseInt(inputDate.substring(0, 2));
-        int givenMonth = Integer.parseInt(inputDate.substring(3, 5));
-        int givenYear = Integer.parseInt(inputDate.substring(6, 10));
+            calculation = new Calculation(givenDate, givenMonth, givenYear);
+        }else{
+            System.out.println("Enter valid date like 01/02/2024");
+        }
 
-        calculation = new Calculation(givenDate, givenMonth, givenYear);
+        
     }
 
     
 
     public void printDayOfWeek() {
-        if (calculation.isValid()) {
+        if (calculation != null && calculation.isValid()) {
             String[] nameOfTheDay = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
             int nearestLeapYear = calculation.getNearestForthCenturyLeapYear(calculation.year - 1);
@@ -116,13 +121,11 @@ public class GetDateofDay {
         System.out.print("Enter the Date (DD/MM/YYYY) : ");
         String inputDate = input.next();
 
-        if (inputDate.length() == 10){
-            Calendar calendar = new Calendar();
-            calendar.getInputDate(inputDate);
-            calendar.printDayOfWeek();
-        }else{
-            System.out.println("Enter valid date like 01/02/2024");
-        }
+        
+        Calendar calendar = new Calendar();
+        calendar.getInputDate(inputDate);
+        calendar.printDayOfWeek();
+        
         
         
     }
