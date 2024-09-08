@@ -6,7 +6,7 @@ class Calculation{
         if (month == 2 && date > 29){
             System.out.println("February's date is not greater than 29");
         }
-        if (date > 31 || month > 12 || year <= 400){
+        if (date > 31 || month > 12 || year <= 0){
             System.out.println("Please recheck the date you entered");
         }
     }
