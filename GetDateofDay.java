@@ -1,5 +1,35 @@
 import java.util.*;
 class Calculation{
+
+    int date;
+    int month;
+    int year;
+    boolean isValid = true;
+
+    // Constructor
+    public Calculation(int date, int month, int year) {
+        this.date = date;
+        this.month = month;
+        this.year = year;
+        validateInputDate();
+    }
+
+    private void validateInputDate() {
+        if (month > 12 || year <= 0 || month < 1 || year > 9999) {
+            System.out.println("Please recheck the date you entered");
+            isValid = false;
+        } else if (month == 2 && date > 29) {
+            System.out.println("February's date is not greater than 29");
+            isValid = false;
+        } else if (date > 31 || date < 1) {
+            System.out.println("Date is not valid for the given month");
+            isValid = false;
+        }
+    }
+
+    public boolean isValid() {
+        return isValid;
+    }
     
 
     public static void validationOfinputDate(int date, int month, int year){
@@ -56,28 +86,52 @@ class Calculation{
     }
 
 }
-public class GetDateofDay {
-    public static void main(String[] args){
-        String[] nameOfTheDay = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-        Scanner input = new Scanner(System.in);
-        System.out.print("Enter the Date (DD/MM/YYYY) : ");
-        String inputDate = input.next(); // 12/11/2024
+
+class Calendar {
+    public Calculation calculation;
+
+    public void getInputDate(String inputDate) {
+
         int givenDate = Integer.parseInt(inputDate.substring(0, 2));
         int givenMonth = Integer.parseInt(inputDate.substring(3, 5));
         int givenYear = Integer.parseInt(inputDate.substring(6, 10));
-        
 
-        Calculation calculation = new Calculation();
+        calculation = new Calculation(givenDate, givenMonth, givenYear);
+    }
 
-        Calculation.validationOfinputDate(givenDate, givenMonth, givenYear);
-        int nearestLeapYear = calculation.getNearestForthCenturyLeapYear(givenYear - 1);
+    
 
-        int oddDays = ((givenYear - 1) - nearestLeapYear);
-        int oddDaysTillTheYearBefore = calculation.countOddDays(oddDays);
+    public void printDayOfWeek() {
+        if (calculation.isValid()) {
+            String[] nameOfTheDay = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+
+            int nearestLeapYear = calculation.getNearestForthCenturyLeapYear(calculation.year - 1);
+
+            int oddDays = ((calculation.year - 1) - nearestLeapYear);
+            int oddDaysTillTheYearBefore = calculation.countOddDays(oddDays);
+            
+            int resultDayIndex = calculation.currentYearOddDays(calculation.date,calculation.month,calculation.year, oddDaysTillTheYearBefore);
+            System.out.println(nameOfTheDay[resultDayIndex]);
+        }
+
+
         
-        int resultDayIndex = calculation.currentYearOddDays(givenDate,givenMonth,givenYear, oddDaysTillTheYearBefore);
-        System.out.println(nameOfTheDay[resultDayIndex]);
-        
+    }
+}
+
+public class GetDateofDay {
+    public static void main(String[] args){
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter the Date (DD/MM/YYYY) : ");
+        String inputDate = input.next();
+
+        if (inputDate.length() == 10){
+            Calendar calendar = new Calendar();
+            calendar.getInputDate(inputDate);
+            calendar.printDayOfWeek();
+        }else{
+            System.out.println("Enter valid date like 01/02/2024");
+        }
         
         
     }
