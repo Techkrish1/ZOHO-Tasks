@@ -2,7 +2,7 @@ import java.util.*;
 
 class PlayGame{
     private static int size = 10; 
-    private static int totalMines = 10; 
+    private static int totalMines = 8; 
     private static char emptyCells = '.';
     private static char mine = '*';
     private static char flag = 'F';
@@ -15,7 +15,7 @@ class PlayGame{
     boolean winStatus;
 
     public PlayGame() {
-        board = new char[size][size];
+        // board = new char[size][size];
         minesPositions = new boolean[size][size];
         revealedPositions = new boolean[size][size];
         flaggedPositions = new boolean[size][size];
@@ -27,7 +27,7 @@ class PlayGame{
     public void initializeBoard(){
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
-                board[row][col] = emptyCells;
+                // board[row][col] = emptyCells;
                 minesPositions[row][col] = false;
                 revealedPositions[row][col]= false;
                 flaggedPositions[row][col] = false;
@@ -74,8 +74,8 @@ class PlayGame{
 
     public void printBoard() {
         System.out.print("  ");
-        for (int row = 0; row < size; row++) {
-            System.out.print(row + " ");
+        for (int col = 0; col < size; col++) {
+            System.out.print(col + " ");
         }
         System.out.println();
         for (int row = 0; row < size; row++) {
