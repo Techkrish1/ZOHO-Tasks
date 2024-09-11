@@ -7,11 +7,27 @@ class PlayGame{
     private static char mine = '*';
     private static char flag = 'F';
 
-    boolean[][] minesPositions;
-    boolean[][] revealedPositions;
-    boolean[][] flaggedPositions;
-    boolean gameOver;
-    boolean winStatus;
+    private boolean[][] minesPositions;
+    private boolean[][] revealedPositions;
+    private boolean[][] flaggedPositions;
+    private boolean gameOver;
+    private boolean winStatus;
+
+    public boolean getGameOver(){
+        return gameOver;
+    }
+
+    public boolean getWinStatus(){
+        return winStatus;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
+    }
+
+    public void setWinStatus(boolean winStatus) {
+        this.winStatus = winStatus;
+    }
 
     public PlayGame() {
         minesPositions = new boolean[size][size];
@@ -95,7 +111,7 @@ class PlayGame{
         }
     }
 
-    public void checkWins(){
+    private void checkWins(){
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
                 if (minesPositions[row][col]) {
@@ -113,7 +129,7 @@ class PlayGame{
 
     }
 
-    public int countMines(int x, int y){
+    private int countMines(int x, int y){
         int count = 0;
         for (int row = x - 1; row <= x + 1; row++) {
             for (int col = y - 1; col <= y + 1; col++) {
@@ -125,7 +141,7 @@ class PlayGame{
         return count;
     }
 
-    public void reveal(int x, int y) {
+    private void reveal(int x, int y) {
         if (x < 0 || x >= size || y < 0 || y >= size || revealedPositions[x][y] || flaggedPositions[x][y]) {
             return;
         }
@@ -143,7 +159,7 @@ class PlayGame{
         }
     }
 
-    public void flag(int x, int y) {
+    private void flag(int x, int y) {
         if (x < 0 || x >= size || y < 0 || y >= size || revealedPositions[x][y]) {
             System.out.println("Invalid action. Cell is already revealed.");
             return;
@@ -159,21 +175,22 @@ class GameSetting{
     public void playerInput(){
         Scanner scanner = new Scanner(System.in);
         PlayGame playGame = new PlayGame();
-        while (!playGame.gameOver && !playGame.winStatus) {
+        while (!playGame.getGameOver() && !playGame.getWinStatus()) {
             playGame.printBoard();
-            if (!playGame.winStatus){
+            if (!playGame.getWinStatus()){
                 System.out.print("Enter action (reveal/flag) and coordinates (e.g., reveal 3 4): ");
                 String input = scanner.nextLine();
                 playGame.startGame(input);
             }
             
         }
-        if (playGame.gameOver) {
+        if (playGame.getGameOver()) {
             playGame.printBoard();
             System.out.println("Game Over! You hit a mine.");
         }else{
             System.out.println("Heh!!! You Win!");
         }
+        scanner.close();
     }
 }
 
