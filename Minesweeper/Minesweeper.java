@@ -46,12 +46,12 @@ class PlayGame{
     public void startGame(String input){
         Scanner scanner = new Scanner(input);
         String[] parts = input.split(" ");
-        if (parts.length < 3) {
-            System.out.println("Invalid input. Use format: 'action row column'");
+        if (parts.length < 3 || parts.length > 3) {
+            System.out.println("Invalid input and don't put extra space. Use format: 'action row column'");
             return;
         }
 
-        String action = parts[0];
+        String action = parts[0].toLowerCase();
         int x = Integer.parseInt(parts[1]);
         int y = Integer.parseInt(parts[2]);
 
@@ -155,9 +155,7 @@ class PlayGame{
 }
 
 class GameSetting{
-    public void validateInput(){
 
-    }
     public void playerInput(){
         Scanner scanner = new Scanner(System.in);
         PlayGame playGame = new PlayGame();
