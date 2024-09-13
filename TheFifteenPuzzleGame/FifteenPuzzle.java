@@ -1,6 +1,7 @@
 class PuzzleSolver{
     public void startGame(int[][] inputBoard){
         Board board = new Board(inputBoard);
+        AstarSolver astarSolver = new AstarSolver(board);
 
     }
 }
