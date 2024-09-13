@@ -1,11 +1,12 @@
 import java.util.*;
 class StartPuzzle{
     private static int[][] inputBoard;
-    private static int[] rowMoves = {-1, 1, 0, 0}; // up, down , left, right
-    private static int[] colMoves = {0, 0, -1, 1};
+    private static int[] rowMoves = {-1, 1, 0, 0}; // up, down , left, right for row index
+    private static int[] colMoves = {0, 0, -1, 1};// up, down , left, right for column index
     private static int size;
     private int emptyTileRow;
     private int emptyTileCol;
+    
     public StartPuzzle(int[][] givenBoard){
         this.size = givenBoard.length;
         this.inputBoard = givenBoard;
