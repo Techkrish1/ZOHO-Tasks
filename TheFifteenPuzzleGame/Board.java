@@ -101,4 +101,9 @@ public class Board {
     public int[][] getTiles() {
         return this.tiles;
     }
+
+    @Override
+    public String toString() {
+        return Arrays.deepToString(this.tiles);
+    }
 }
