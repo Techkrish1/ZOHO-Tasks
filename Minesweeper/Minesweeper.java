@@ -68,20 +68,24 @@ class PlayGame{
         }
 
         String action = parts[0].toLowerCase();
-        int x = Integer.parseInt(parts[1]);
-        int y = Integer.parseInt(parts[2]);
-
-        if (action.equals("reveal")) {
-            if (x < 0 || x >= size || y < 0 || y >= size) {
-                System.out.println("Invalid input. Try again.");
-                return;
+        try{
+            int x = Integer.parseInt(parts[1]);
+            int y = Integer.parseInt(parts[2]);
+            if (action.equals("reveal")) {
+                if (x < 0 || x >= size || y < 0 || y >= size) {
+                    System.out.println("Invalid input. Try again.");
+                    return;
+                }
+                reveal(x, y);
+            } else if (action.equals("flag")) {
+                flag(x, y);
+            } else {
+                System.out.println("Unknown action. Use 'reveal' or 'flag'.");
             }
-            reveal(x, y);
-        } else if (action.equals("flag")) {
-            flag(x, y);
-        } else {
-            System.out.println("Unknown action. Use 'reveal' or 'flag'.");
+        }catch (NumberFormatException e){
+            System.out.println("Invalid input Rows and columns should be in integer...");
         }
+        
 
     }
 
