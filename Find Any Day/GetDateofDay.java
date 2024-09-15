@@ -21,7 +21,7 @@ class Calculation{
             System.out.println("Please recheck the date you entered");
             isValid = false;
         } else if (month == 2){
-            if (date > 29 || (!isLeapYear(year) && date > 28)){
+            if (date > 29 || (!isLeapYear() && date > 28)){
                 System.out.println("February date is wrong");
                 isValid = false;
             }
@@ -50,7 +50,7 @@ class Calculation{
         
     }
 
-    public boolean isLeapYear(int year){ // Checking givenYear is Leap or not
+    public boolean isLeapYear(){ // Checking givenYear is Leap or not
         if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)){
             return true;
         }else{
@@ -58,11 +58,11 @@ class Calculation{
         }
     }
 
-    public int countBalanceOddDaysTillPreviousYear(int year){   // After Finding Nearest Leap year subtract this to given Year (Given Year - Nearest LeapYear) and find the odd days for remaining years
-        int noOfCenturies = year / 100;
-        int balanceYear = year % 100;
-        int leapYears = balanceYear / 4;
-        int oddLeapYears = balanceYear - leapYears;
+    public int countBalanceOddDaysTillPreviousYear(int balanceYears){   // After Finding Nearest Leap year subtract this to given Year (Given Year - Nearest LeapYear) and find the odd days for remaining years
+        int noOfCenturies = balanceYears / 100;
+        int subBalanceYear = balanceYears % 100;
+        int leapYears = subBalanceYear / 4;
+        int oddLeapYears = subBalanceYear - leapYears;
         return ((leapYears * 2) + oddLeapYears + (noOfCenturies * 5)) % 7;
         
     }
@@ -76,7 +76,7 @@ class Calculation{
     }
 
     public int currentYearOddDays(int odddays){
-        boolean isGivenYearLeap = isLeapYear(year);
+        boolean isGivenYearLeap = isLeapYear();
         if (isGivenYearLeap){
             noOfDaysInMonth[1] = 29;
         }
@@ -123,8 +123,8 @@ class MyCalendar {
 
             int nearestLeapYear = calculation.getNearestForthCenturyLeapYear();
 
-            int oddDays = ((calculation.year - 1) - nearestLeapYear);
-            oddDaysTillTheYearBefore = calculation.countBalanceOddDaysTillPreviousYear(oddDays);
+            int balanceYear = ((calculation.year - 1) - nearestLeapYear);
+            oddDaysTillTheYearBefore = calculation.countBalanceOddDaysTillPreviousYear(balanceYear);
             
             resultDayIndex = calculation.currentYearOddDays(oddDaysTillTheYearBefore); // It will give the final Odd Day Index
         }
@@ -141,13 +141,17 @@ class MyCalendar {
     }
 
     public void printDayOfMonth(){
+
         if (calculation != null && calculation.isValid()){
+
             int startday = calculation.helperPrintMonth(oddDaysTillTheYearBefore);
             int totalDays = calculation.noOfDaysInMonth[calculation.month - 1];
             String monthName = calculation.monthName[calculation.month - 1];
+
             System.out.println();
             System.out.println(monthName + " Month calendar ");
             System.out.println("--------------------------------------------");
+            
             for (int row = 0; row < nameOfTheDay.length; row++){
                 System.out.printf("%5s",nameOfTheDay[row].substring(0,3));
                 
