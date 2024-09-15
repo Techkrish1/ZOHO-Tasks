@@ -37,10 +37,10 @@ class Calculation{
     }
     
 
-    public int getNearestForthCenturyLeapYear(int year){   // Finding  Nearest Leap year to make our calulation more easy
+    public int getNearestForthCenturyLeapYear(){   // Finding  Nearest Leap year to make our calulation more easy
         int nearest = 0;
-        for (int start = 1; start < year; start++){
-            if ( (start * 400) <= year){   // Fourth Century has 0 odd days.
+        for (int start = 1; start < (year - 1); start++){
+            if ( (start * 400) <= (year - 1)){   // Fourth Century has 0 odd days.
                 nearest = start * 400;  
             } else{
                 break;
@@ -67,18 +67,26 @@ class Calculation{
         
     }
 
-    public int currentYearOddDays(int date, int month, int year, int odddays){
-        boolean isGivenYearLeap = isLeapYear(year);
-        if (isGivenYearLeap){
-            noOfDaysInMonth[1] = 29;
-        }
+    private int countNumberOfDaysBeforeTheMonth(){
         int noOfDays = 0;
         for (int count = 0; count < month - 1; count++){
             noOfDays += noOfDaysInMonth[count];
         }
-        MyCalendar.printDayOfMonth((((noOfDays + 1) % 7) + odddays) % 7, noOfDaysInMonth[month - 1], monthName[month - 1]);
+        return noOfDays;
+    }
+
+    public int currentYearOddDays(int odddays){
+        boolean isGivenYearLeap = isLeapYear(year);
+        if (isGivenYearLeap){
+            noOfDaysInMonth[1] = 29;
+        }
+        int noOfDays = countNumberOfDaysBeforeTheMonth();
         int currentOddDays = (noOfDays + date) % 7;
         return (currentOddDays + odddays) % 7;
+    }
+
+    public int helperPrintMonth(int oddDaysTillTheYearBefore){
+        return (((countNumberOfDaysBeforeTheMonth() + 1) % 7) + oddDaysTillTheYearBefore) % 7;
     }
 
 }
@@ -86,6 +94,9 @@ class Calculation{
 class MyCalendar {
     public Calculation calculation;
     static String givenDate;
+    static String[] nameOfTheDay = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+    private int resultDayIndex;
+    private int oddDaysTillTheYearBefore;
 
     public void inputDateParts(String inputDate) {
         givenDate = inputDate;
@@ -104,57 +115,62 @@ class MyCalendar {
             
         }else{
             System.out.println("Enter Valid Date....");
-        }
-        
-        
-
-        
+        } 
     }
 
-    
-    static String[] nameOfTheDay = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-    public void printDayOfWeek() {  
+    public void startCalculation(){
         if (calculation != null && calculation.isValid()) {   
 
-            int nearestLeapYear = calculation.getNearestForthCenturyLeapYear(calculation.year - 1);
+            int nearestLeapYear = calculation.getNearestForthCenturyLeapYear();
 
             int oddDays = ((calculation.year - 1) - nearestLeapYear);
-            int oddDaysTillTheYearBefore = calculation.countBalanceOddDaysTillPreviousYear(oddDays);
+            oddDaysTillTheYearBefore = calculation.countBalanceOddDaysTillPreviousYear(oddDays);
             
-            int resultDayIndex = calculation.currentYearOddDays(calculation.date,calculation.month,calculation.year, oddDaysTillTheYearBefore); // It will give the final Odd Day Index
-           
+            resultDayIndex = calculation.currentYearOddDays(oddDaysTillTheYearBefore); // It will give the final Odd Day Index
+        }
+    }
+    
+    public void printDayOfWeek() {  
+        if (calculation != null && calculation.isValid()) {
             System.out.println("--------------------------------------------");
             System.out.println(givenDate + " : " + nameOfTheDay[resultDayIndex]);
             System.out.println();
         }
-     
+        
+    
     }
 
-    public static void printDayOfMonth(int startday, int totalDays, String monthName){
-        System.out.println();
-        System.out.println(monthName + " Month calendar ");
-        System.out.println("--------------------------------------------");
-        for (int row = 0; row < nameOfTheDay.length; row++){
-            System.out.printf("%5s",nameOfTheDay[row].substring(0,3));
-            
-        }
-        System.out.println();
-        for (int row = 0; row < startday; row++){
-            System.out.printf("%5s", " ");
-        }
-        int count = 1;
-        for (int row = 0; row < totalDays + startday; row++){
-            if (count > startday){
-                System.out.printf("%5d",count - startday);
-            }else if ((count+startday) > totalDays){
-                break;
+    public void printDayOfMonth(){
+        if (calculation != null && calculation.isValid()){
+            int startday = calculation.helperPrintMonth(oddDaysTillTheYearBefore);
+            int totalDays = calculation.noOfDaysInMonth[calculation.month - 1];
+            String monthName = calculation.monthName[calculation.month - 1];
+            System.out.println();
+            System.out.println(monthName + " Month calendar ");
+            System.out.println("--------------------------------------------");
+            for (int row = 0; row < nameOfTheDay.length; row++){
+                System.out.printf("%5s",nameOfTheDay[row].substring(0,3));
+                
             }
-            if ((count % 7) == 0){
-                System.out.println();
+            System.out.println();
+            for (int row = 0; row < startday; row++){
+                System.out.printf("%5s", " ");
             }
-            count += 1;
+            int count = 1;
+            for (int row = 0; row < totalDays + startday; row++){
+                if (count > startday){
+                    System.out.printf("%5d",count - startday);
+                }else if ((count+startday) > totalDays){
+                    break;
+                }
+                if ((count % 7) == 0){
+                    System.out.println();
+                }
+                count += 1;
+            }
+            System.out.println();
         }
-        System.out.println();
+        
     }
 }
 
@@ -167,6 +183,8 @@ public class GetDateofDay {
         
         MyCalendar myCalendar = new MyCalendar();
         myCalendar.inputDateParts(inputDate);
+        myCalendar.startCalculation();
+        myCalendar.printDayOfMonth();
         myCalendar.printDayOfWeek();
         
 
