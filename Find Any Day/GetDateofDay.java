@@ -5,6 +5,7 @@ class Calculation{
     int month;
     int year;
     int[] noOfDaysInMonth = {31, 28, 31,30, 31, 30, 31, 31, 30, 31, 30, 31};
+    String[] monthName = {"January", "February", "March", "April", "May", "June", "July", "August", "Septempber", "October","November", "December"};
     boolean isValid = true;
 
     // Constructor
@@ -20,7 +21,7 @@ class Calculation{
             System.out.println("Please recheck the date you entered");
             isValid = false;
         } else if (month == 2){
-            if (date > 29 || (!leapYear(year) && date > 28)){
+            if (date > 29 || (!isLeapYear(year) && date > 28)){
                 System.out.println("February date is wrong");
                 isValid = false;
             }
@@ -49,7 +50,7 @@ class Calculation{
         
     }
 
-    public boolean leapYear(int year){ // Checking givenYear is Leap or not
+    public boolean isLeapYear(int year){ // Checking givenYear is Leap or not
         if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)){
             return true;
         }else{
@@ -57,7 +58,7 @@ class Calculation{
         }
     }
 
-    public int countOddDays(int year){   // After Finding Nearest Leap year subtract this to given Year (Given Year - Nearest LeapYear) and find the odd days for remaining years
+    public int countBalanceOddDaysTillPreviousYear(int year){   // After Finding Nearest Leap year subtract this to given Year (Given Year - Nearest LeapYear) and find the odd days for remaining years
         int noOfCenturies = year / 100;
         int balanceYear = year % 100;
         int leapYears = balanceYear / 4;
@@ -67,27 +68,26 @@ class Calculation{
     }
 
     public int currentYearOddDays(int date, int month, int year, int odddays){
-        String[] monthName = {"January", "February", "March", "April", "May", "June", "July", "August", "Septempber", "October","November", "December"};
-        boolean isGivenYearLear = leapYear(year);
-        if (isGivenYearLear){
+        boolean isGivenYearLeap = isLeapYear(year);
+        if (isGivenYearLeap){
             noOfDaysInMonth[1] = 29;
         }
         int noOfDays = 0;
         for (int count = 0; count < month - 1; count++){
             noOfDays += noOfDaysInMonth[count];
         }
-        Calendar.printDayOfMonth((((noOfDays + 1) % 7) + odddays) % 7, noOfDaysInMonth[month - 1], monthName[month - 1]);
+        MyCalendar.printDayOfMonth((((noOfDays + 1) % 7) + odddays) % 7, noOfDaysInMonth[month - 1], monthName[month - 1]);
         int currentOddDays = (noOfDays + date) % 7;
         return (currentOddDays + odddays) % 7;
     }
 
 }
 
-class Calendar {
+class MyCalendar {
     public Calculation calculation;
     static String givenDate;
 
-    public void getInputDate(String inputDate) {
+    public void inputDateParts(String inputDate) {
         givenDate = inputDate;
          // 12/10/2024 Spliting by "/"
         String[] parts = inputDate.split("/");
@@ -119,7 +119,7 @@ class Calendar {
             int nearestLeapYear = calculation.getNearestForthCenturyLeapYear(calculation.year - 1);
 
             int oddDays = ((calculation.year - 1) - nearestLeapYear);
-            int oddDaysTillTheYearBefore = calculation.countOddDays(oddDays);
+            int oddDaysTillTheYearBefore = calculation.countBalanceOddDaysTillPreviousYear(oddDays);
             
             int resultDayIndex = calculation.currentYearOddDays(calculation.date,calculation.month,calculation.year, oddDaysTillTheYearBefore); // It will give the final Odd Day Index
            
@@ -163,11 +163,11 @@ public class GetDateofDay {
         Scanner input = new Scanner(System.in);
         System.out.print("Enter the Date (DD/MM/YYYY) : ");
         String inputDate = input.next();
-
+        input.close();
         
-        Calendar calendar = new Calendar();
-        calendar.getInputDate(inputDate);
-        calendar.printDayOfWeek();
+        MyCalendar myCalendar = new MyCalendar();
+        myCalendar.inputDateParts(inputDate);
+        myCalendar.printDayOfWeek();
         
 
     }

@@ -1,6 +1,6 @@
 import java.util.*;
 class StartPuzzle{
-    private static int[][] inputBoard;
+    private int[][] inputBoard;
     private static int[] rowMoves = {-1, 1, 0, 0}; // up, down , left, right for row index
     private static int[] colMoves = {0, 0, -1, 1};// up, down , left, right for column index
     private static int rowSize;
@@ -13,6 +13,7 @@ class StartPuzzle{
         this.colSize = givenBoard[0].length;
         this.inputBoard = givenBoard;
         findEmptyRowAndCol();
+        printBoard();
     }
 
     private void findEmptyRowAndCol(){
@@ -25,10 +26,9 @@ class StartPuzzle{
                 }
             }
         }
-        printBoard(inputBoard);
     }
 
-    public void printBoard(int[][] inputBoard){
+    public void printBoard(){
         System.out.println("----------------------");
         for (int row = 0; row < rowSize; row++){
             System.out.print(" |");
@@ -65,7 +65,7 @@ class StartPuzzle{
             String move = input.next().toLowerCase();
 
             if (!isinputCorrect(move)){
-                printBoard(inputBoard);
+                printBoard();
                 System.out.println("Typed Wrongly... Please type any one to move the empty space(0) (UP /DOWN /LEFT /RIGHT)");
                 continue;
             }
@@ -74,7 +74,7 @@ class StartPuzzle{
             int newCol = emptyTileCol + colMoves[correctMove(move)];
 
             if (!isValidMove(newRow, newCol)){
-                printBoard(inputBoard);
+                printBoard();
                 System.out.println("it is not valid move... ");
                 continue;
             }
@@ -84,7 +84,7 @@ class StartPuzzle{
             
             emptyTileRow = newRow;
             emptyTileCol = newCol;
-            printBoard(inputBoard);
+            printBoard();
         }
 
         System.out.println("Hey!!! You are win!");
