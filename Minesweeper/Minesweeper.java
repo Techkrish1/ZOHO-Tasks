@@ -45,7 +45,6 @@ class PlayGame{
     }
 
     private void startGame(String input){
-        Scanner scanner = new Scanner(input);
         String[] parts = input.split(" ");
         if (parts.length < 3 || parts.length > 3) {
             System.out.println("Invalid input and don't put extra space. Use format: 'action row column'");
