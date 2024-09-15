@@ -4,6 +4,7 @@ class Calculation{
     int date;
     int month;
     int year;
+    int[] noOfDaysInMonth = {31, 28, 31,30, 31, 30, 31, 31, 30, 31, 30, 31};
     boolean isValid = true;
 
     // Constructor
@@ -15,14 +16,17 @@ class Calculation{
     }
 
     private void validateInputDate() {
-        if (month > 12 || year <= 0 || month < 1 || year > 9999) {
+        if (month > 12 || year <= 0 || month < 1 || date > 31 || date < 1) {
             System.out.println("Please recheck the date you entered");
             isValid = false;
-        } else if (month == 2 && date > 29) {
-            System.out.println("February's date is not greater than 29");
-            isValid = false;
-        } else if (date > 31 || date < 1) {
-            System.out.println("Date is not valid for the given month");
+        } else if (month == 2){
+            if (date > 29 || (!leapYear(year) && date > 28)){
+                System.out.println("February date is wrong");
+                isValid = false;
+            }
+            
+        }else if (date > noOfDaysInMonth[month - 1] && month != 2) {
+            System.out.println("Check the  date you entered! give valid date...");
             isValid = false;
         }
     }
@@ -34,7 +38,7 @@ class Calculation{
 
     public int getNearestForthCenturyLeapYear(int year){   // Finding  Nearest Leap year to make our calulation more easy
         int nearest = 0;
-        for (int start = 1; start < 25; start++){
+        for (int start = 1; start < year; start++){
             if ( (start * 400) <= year){   // Fourth Century has 0 odd days.
                 nearest = start * 400;  
             } else{
@@ -63,7 +67,6 @@ class Calculation{
     }
 
     public int currentYearOddDays(int date, int month, int year, int odddays){
-        int[] noOfDaysInMonth = {31, 28, 31,30, 31, 30, 31, 31, 30, 31, 30, 31};
         String[] monthName = {"January", "February", "March", "April", "May", "June", "July", "August", "Septempber", "October","November", "December"};
         boolean isGivenYearLear = leapYear(year);
         if (isGivenYearLear){
@@ -86,15 +89,24 @@ class Calendar {
 
     public void getInputDate(String inputDate) {
         givenDate = inputDate;
-        if (inputDate.length() == 10){ // 12/10/2024 length 10 for indexing
-            int givenDate = Integer.parseInt(inputDate.substring(0, 2));
-            int givenMonth = Integer.parseInt(inputDate.substring(3, 5));
-            int givenYear = Integer.parseInt(inputDate.substring(6, 10));
+         // 12/10/2024 Spliting by "/"
+        String[] parts = inputDate.split("/");
+        if (parts.length == 3){
+            try {
+                int _date = Integer.parseInt(parts[0]);
+                int _month = Integer.parseInt(parts[1]);
+                int _year = Integer.parseInt(parts[2]);
 
-            calculation = new Calculation(givenDate, givenMonth, givenYear);
+                calculation = new Calculation(_date, _month, _year);
+            }catch (NumberFormatException e){
+                System.out.println("Enter a valid date like (01/02/2024)");
+            }
+            
         }else{
-            System.out.println("Enter valid date like 01/02/2024");
+            System.out.println("Enter Valid Date....");
         }
+        
+        
 
         
     }
