@@ -27,12 +27,14 @@ class StartPuzzle{
     }
 
     public void printBoard(int[][] inputBoard){
+        System.out.println("----------------------");
         for (int row = 0; row < size; row++){
             for (int col = 0; col < size; col++){
                 System.out.printf("%3d", inputBoard[row][col]);
             }
             System.out.println();
         }
+        System.out.println("----------------------");
     }
 
     private boolean isGoal(){
@@ -55,7 +57,7 @@ class StartPuzzle{
 
         while (!isGoal()) {
             Scanner input = new Scanner(System.in);
-            System.out.print("To move emptySpace(0) you can type any one UP /DOWN /LEFT /RIGHT:");
+            System.out.print("---> Type any one UP /DOWN /LEFT /RIGHT: ");
             String move = input.next().toLowerCase();
 
             if (!isinputCorrect(move)){
@@ -74,7 +76,6 @@ class StartPuzzle{
             }
 
             inputBoard[emptyTileRow][emptyTileCol] = inputBoard[newRow][newCol];
-            System.out.println(inputBoard[emptyTileRow][emptyTileCol]);
             inputBoard[newRow][newCol] = 0;
             
             emptyTileRow = newRow;
@@ -121,11 +122,9 @@ public class Puzzle {
                 {5, 6, 0, 8},
                 {9, 10, 7, 11},
                 {13, 14, 15, 12}
-                // {1, 2, 3, 4},
-                // {5, 6, 7, 8},
-                // {9, 10, 11, 12},
-                // {13, 14, 15, 0}
-                
+                // {1, 2, 3},
+                // {4, 0, 6},
+                // {7, 5, 8}
                 
             };
         StartPuzzle startPuzzle = new StartPuzzle(inputBoard);
