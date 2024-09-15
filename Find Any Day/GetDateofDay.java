@@ -123,7 +123,7 @@ class Calendar {
             
             int resultDayIndex = calculation.currentYearOddDays(calculation.date,calculation.month,calculation.year, oddDaysTillTheYearBefore); // It will give the final Odd Day Index
            
-            System.out.println("----------------------");
+            System.out.println("--------------------------------------------");
             System.out.println(givenDate + " : " + nameOfTheDay[resultDayIndex]);
             System.out.println();
         }
@@ -133,27 +133,24 @@ class Calendar {
     public static void printDayOfMonth(int startday, int totalDays, String monthName){
         System.out.println();
         System.out.println(monthName + " Month calendar ");
-        System.out.println("----------------------");
+        System.out.println("--------------------------------------------");
         for (int row = 0; row < nameOfTheDay.length; row++){
-            System.out.print(nameOfTheDay[row].substring(0,2));
-            System.out.print("  ");
+            System.out.printf("%5s",nameOfTheDay[row].substring(0,3));
+            
         }
         System.out.println();
         for (int row = 0; row < startday; row++){
-            System.out.print("   ");
+            System.out.printf("%5s", " ");
         }
         int count = 1;
         for (int row = 0; row < totalDays + startday; row++){
             if (count > startday){
-                System.out.print(count - startday);
-                System.out.print("  ");
+                System.out.printf("%5d",count - startday);
             }else if ((count+startday) > totalDays){
                 break;
             }
             if ((count % 7) == 0){
                 System.out.println();
-            }if (count <= 10) {
-                System.out.print(" ");
             }
             count += 1;
         }
