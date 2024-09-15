@@ -3,19 +3,21 @@ class StartPuzzle{
     private static int[][] inputBoard;
     private static int[] rowMoves = {-1, 1, 0, 0}; // up, down , left, right for row index
     private static int[] colMoves = {0, 0, -1, 1};// up, down , left, right for column index
-    private static int size;
+    private static int rowSize;
+    private static int colSize;
     private int emptyTileRow;
     private int emptyTileCol;
     
     public StartPuzzle(int[][] givenBoard){
-        this.size = givenBoard.length;
+        this.rowSize = givenBoard.length;
+        this.colSize = givenBoard[0].length;
         this.inputBoard = givenBoard;
         findEmptyRowAndCol();
     }
 
     private void findEmptyRowAndCol(){
-        for (int row = 0; row < size; row++){
-            for (int col = 0; col < size; col++){
+        for (int row = 0; row < rowSize; row++){
+            for (int col = 0; col < colSize; col++){
                 if (inputBoard[row][col] == 0){
                     emptyTileRow = row;
                     emptyTileCol = col;
@@ -28,9 +30,11 @@ class StartPuzzle{
 
     public void printBoard(int[][] inputBoard){
         System.out.println("----------------------");
-        for (int row = 0; row < size; row++){
-            for (int col = 0; col < size; col++){
+        for (int row = 0; row < rowSize; row++){
+            System.out.print(" |");
+            for (int col = 0; col < colSize; col++){
                 System.out.printf("%3d", inputBoard[row][col]);
+                System.out.print("|");
             }
             System.out.println();
         }
@@ -39,13 +43,13 @@ class StartPuzzle{
 
     private boolean isGoal(){
         int number = 1;
-        for (int row = 0; row < size; row++){
-            for (int col = 0; col < size; col++){
+        for (int row = 0; row < rowSize; row++){
+            for (int col = 0; col < colSize; col++){
                 if (inputBoard[row][col] != number) {
                     return false;
                 }
                 number += 1;
-                if (number == (size * size)){
+                if (number == (rowSize * colSize)){
                     number = 0;
                 }
             }
@@ -88,7 +92,7 @@ class StartPuzzle{
     }
 
     private boolean isValidMove(int newRow, int newCol){
-        return (newRow >= 0 && newRow < size && newCol >= 0 && newCol < size);
+        return (newRow >= 0 && newRow < rowSize && newCol >= 0 && newCol < colSize);
     }
 
     private int correctMove(String move){
@@ -125,6 +129,8 @@ public class Puzzle {
                 // {1, 2, 3},
                 // {4, 0, 6},
                 // {7, 5, 8}
+                // {1,0,3},
+                // {4,2,5}
                 
             };
         StartPuzzle startPuzzle = new StartPuzzle(inputBoard);
