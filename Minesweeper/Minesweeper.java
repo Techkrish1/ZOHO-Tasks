@@ -1,7 +1,8 @@
 import java.util.*;
 
 class PlayGame{
-    private static int size = 10; 
+    private static int rowSize = 10; 
+    private static int colSize = 10;
     private static int totalMines = 8; 
     private static char emptyCells = '.';
     private static char mine = '*';
@@ -30,17 +31,17 @@ class PlayGame{
     }
 
     public PlayGame() {
-        minesPositions = new boolean[size][size];
-        revealedPositions = new boolean[size][size];
-        flaggedPositions = new boolean[size][size];
+        minesPositions = new boolean[rowSize][colSize];
+        revealedPositions = new boolean[rowSize][colSize];
+        flaggedPositions = new boolean[rowSize][colSize];
         gameOver = false;
         winStatus = false;
         initializeBoard();
     }
 
     public void initializeBoard(){
-        for (int row = 0; row < size; row++) {
-            for (int col = 0; col < size; col++) {
+        for (int row = 0; row < rowSize; row++) {
+            for (int col = 0; col < colSize; col++) {
                 minesPositions[row][col] = false;
                 revealedPositions[row][col]= false;
                 flaggedPositions[row][col] = false;
@@ -50,8 +51,8 @@ class PlayGame{
         Random rand = new Random();
         int placedMines = 0;
         while (placedMines < totalMines) {
-            int x = rand.nextInt(size);
-            int y = rand.nextInt(size);
+            int x = rand.nextInt(rowSize);
+            int y = rand.nextInt(colSize);
             if (!minesPositions[x][y]) {
                 minesPositions[x][y] = true;
                 placedMines++;
@@ -72,7 +73,7 @@ class PlayGame{
             int x = Integer.parseInt(parts[1]);
             int y = Integer.parseInt(parts[2]);
             if (action.equals("reveal")) {
-                if (x < 0 || x >= size || y < 0 || y >= size) {
+                if (x < 0 || x >= rowSize || y < 0 || y >= colSize) {
                     System.out.println("Invalid input. Try again.");
                     return;
                 }
@@ -90,34 +91,36 @@ class PlayGame{
     }
 
     public void printBoard() {
-        System.out.print("  ");
-        for (int col = 0; col < size; col++) {
-            System.out.print(col + " ");
+        System.out.println();
+        System.out.printf("%3s", " ");
+        for (int col = 0; col < colSize; col++) {
+            System.out.printf("%3d",col);
         }
         System.out.println();
-        for (int row = 0; row < size; row++) {
-            System.out.print(row + " ");
-            for (int col = 0; col < size; col++) {
+        for (int row = 0; row < rowSize; row++) {
+            System.out.printf("%3d",row);
+            for (int col = 0; col < colSize; col++) {
                 if (flaggedPositions[row][col]) {
-                    System.out.print(flag + " ");
+                    System.out.printf("%3c",flag);
                 } else if (revealedPositions[row][col]) {
                     if (minesPositions[row][col]) {
-                        System.out.print(mine + " ");
+                        System.out.printf("%3c",mine);
                     } else {
-                        System.out.print(countMines(row, col) + " ");
+                        System.out.printf("%3d",countMines(row, col));
                     }
                 } else {
-                    System.out.print(emptyCells + " ");
+                    System.out.printf("%3c",emptyCells);
                 }
             }
             System.out.println();
             checkWins();
         }
+        System.out.println();
     }
 
     private void checkWins(){
-        for (int row = 0; row < size; row++) {
-            for (int col = 0; col < size; col++) {
+        for (int row = 0; row < rowSize; row++) {
+            for (int col = 0; col < colSize; col++) {
                 if (minesPositions[row][col]) {
                     if (!flaggedPositions[row][col]) {
                         return; 
@@ -137,7 +140,7 @@ class PlayGame{
         int count = 0;
         for (int row = x - 1; row <= x + 1; row++) {
             for (int col = y - 1; col <= y + 1; col++) {
-                if (row >= 0 && row < size && col >= 0 && col < size && minesPositions[row][col]) {
+                if (row >= 0 && row < rowSize && col >= 0 && col < colSize && minesPositions[row][col]) {
                     count++;
                 }
             }
@@ -146,7 +149,7 @@ class PlayGame{
     }
 
     private void reveal(int x, int y) {
-        if (x < 0 || x >= size || y < 0 || y >= size || revealedPositions[x][y] || flaggedPositions[x][y]) {
+        if (x < 0 || x >= rowSize || y < 0 || y >= colSize || revealedPositions[x][y] || flaggedPositions[x][y]) {
             return;
         }
         revealedPositions[x][y] = true;
@@ -164,7 +167,7 @@ class PlayGame{
     }
 
     private void flag(int x, int y) {
-        if (x < 0 || x >= size || y < 0 || y >= size || revealedPositions[x][y]) {
+        if (x < 0 || x >= rowSize || y < 0 || y >= colSize || revealedPositions[x][y]) {
             System.out.println("Invalid action. Cell is already revealed.");
             return;
         }
