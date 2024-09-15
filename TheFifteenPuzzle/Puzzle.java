@@ -58,13 +58,13 @@ class StartPuzzle{
     }
 
     public void playGame(){
+        Scanner input = new Scanner(System.in);
 
-        while (!isGoal()) {
-            Scanner input = new Scanner(System.in);
+        while (isGoal() == false) {
             System.out.print("---> Type any one UP /DOWN /LEFT /RIGHT: ");
             String move = input.next().toLowerCase();
 
-            if (!isinputCorrect(move)){
+            if (isinputCorrect(move) == false){
                 printBoard();
                 System.out.println("Typed Wrongly... Please type any one to move the empty space(0) (UP /DOWN /LEFT /RIGHT)");
                 continue;
@@ -73,7 +73,7 @@ class StartPuzzle{
             int newRow = emptyTileRow + rowMoves[correctMove(move)];
             int newCol = emptyTileCol + colMoves[correctMove(move)];
 
-            if (!isValidMove(newRow, newCol)){
+            if (isValidMove(newRow, newCol) == false){
                 printBoard();
                 System.out.println("it is not valid move... ");
                 continue;
@@ -86,7 +86,7 @@ class StartPuzzle{
             emptyTileCol = newCol;
             printBoard();
         }
-
+        input.close();
         System.out.println("Hey!!! You are win!");
         
     }
