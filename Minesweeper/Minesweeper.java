@@ -12,15 +12,14 @@ class PlayGame{
     private boolean[][] revealedPositions;
     private boolean[][] flaggedPositions;
     private boolean gameOver;
-    private boolean winStatus;
 
     public PlayGame() {
         minesPositions = new boolean[rowSize][colSize];
         revealedPositions = new boolean[rowSize][colSize];
         flaggedPositions = new boolean[rowSize][colSize];
         gameOver = false;
-        winStatus = false;
         initializeBoard();
+        printBoard();
     }
 
     private void initializeBoard(){
@@ -96,26 +95,21 @@ class PlayGame{
                 }
             }
             System.out.println();
-            checkWins();
         }
         System.out.println();
     }
 
-    private void checkWins(){
+    private boolean checkWins(){
         for (int row = 0; row < rowSize; row++) {
             for (int col = 0; col < colSize; col++) {
                 if (minesPositions[row][col]) {
                     if (!flaggedPositions[row][col]) {
-                        return; 
-                    }
-                } else {
-                    if (!revealedPositions[row][col]) {
-                        return; 
+                        return false; 
                     }
                 }
             }
         }
-        winStatus = true;
+        return true;
 
     }
 
@@ -159,20 +153,20 @@ class PlayGame{
 
     public void playerInput(){
         Scanner scanner = new Scanner(System.in);
-        while (gameOver == false && winStatus == false) {
+        while (gameOver == false && checkWins() == false) {
+
+            System.out.print("Enter action (reveal/flag) and coordinates (e.g., reveal 3 4): ");
+            String input = scanner.nextLine();
+            startGame(input);
             printBoard();
-            if (winStatus == false){
-                System.out.print("Enter action (reveal/flag) and coordinates (e.g., reveal 3 4): ");
-                String input = scanner.nextLine();
-                startGame(input);
-            }
-            
+
         }
+
         if (gameOver) {
             printBoard();
             System.out.println("Game Over! You hit a mine.");
         }else{
-            System.out.println("Heh!!! You Win!");
+            System.out.println("Heh!!! You Win. Placed all the flags perfectly!");
         }
         scanner.close();
     }
