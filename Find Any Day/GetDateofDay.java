@@ -143,7 +143,7 @@ class MyCalendar {
 
         if (calculation != null && calculation.isValid()){
 
-            int startday = calculation.helperPrintMonth(oddDaysTillTheYearBefore);
+            int startDayOfOddDay = calculation.helperPrintMonth(oddDaysTillTheYearBefore);
             int totalDays = calculation.noOfDaysInMonth[calculation.month - 1];
             if (calculation.month >= 2){
                 totalDays += 1;
@@ -159,14 +159,15 @@ class MyCalendar {
                 
             }
             System.out.println();
-            for (int row = 0; row < startday; row++){
-                System.out.printf("%5s", " ");
-            }
+
             int count = 1;
-            for (int row = 0; row < totalDays + startday; row++){
-                if (count > startday){
-                    System.out.printf("%5d",count - startday);
-                }else if ((count+startday) > totalDays){
+            for (int row = 0; row < totalDays + startDayOfOddDay; row++){
+                if (count <= startDayOfOddDay){
+                    System.out.printf("%5s", " ");
+                }
+                else if (count > startDayOfOddDay){
+                    System.out.printf("%5d",count - startDayOfOddDay);
+                }else if ((count+startDayOfOddDay) > totalDays){
                     break;
                 }
                 if ((count % 7) == 0){
