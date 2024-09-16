@@ -70,7 +70,7 @@ class Calculation{
     private int countNumberOfDaysBeforeTheMonth(){
         int noOfDays = 0;
         if (isLeapYear() && month >= 2){
-            noOfDays += 1;
+            noOfDaysInMonth[1] = 29;
         }
         for (int count = 0; count < month - 1; count++){
             noOfDays += noOfDaysInMonth[count];
@@ -145,9 +145,6 @@ class MyCalendar {
 
             int startDayOfOddDay = calculation.helperPrintMonth(oddDaysTillTheYearBefore);
             int totalDays = calculation.noOfDaysInMonth[calculation.month - 1];
-            if (calculation.month >= 2){
-                totalDays += 1;
-            }
             String monthName = calculation.monthName[calculation.month - 1];
 
             System.out.println();
