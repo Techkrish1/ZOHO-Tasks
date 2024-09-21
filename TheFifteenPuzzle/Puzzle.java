@@ -35,10 +35,10 @@ Hey!!! You are win!
 import java.util.*;
 class StartPuzzle{
     private int[][] inputBoard;
-    private int[] rowMoves = {-1, 1, 0, 0}; // up, down , left, right for row index
-    private int[] colMoves = {0, 0, -1, 1};// up, down , left, right for column index
-    private int rowSize;
-    private int colSize;
+    private final int[] rowMoves = {-1, 1, 0, 0}; // up, down , left, right for row index
+    private final int[] colMoves = {0, 0, -1, 1};// up, down , left, right for column index
+    private final int rowSize;
+    private final int colSize;
     private int emptyTileRow;
     private int emptyTileCol;
     
@@ -50,7 +50,7 @@ class StartPuzzle{
         printBoard();
     }
 
-    private void findEmptyRowAndCol(){
+    private void findEmptyRowAndCol(){   // finding the empty tile's  row and column 
         for (int row = 0; row < rowSize; row++){
             for (int col = 0; col < colSize; col++){
                 if (inputBoard[row][col] == 0){
@@ -104,12 +104,12 @@ class StartPuzzle{
                 continue;
             }
             
-            int newRow = emptyTileRow + rowMoves[correctMove(move)];
-            int newCol = emptyTileCol + colMoves[correctMove(move)];
+            int newRow = emptyTileRow + rowMoves[getStepIndex(move)];
+            int newCol = emptyTileCol + colMoves[getStepIndex(move)];
 
             if (isValidMove(newRow, newCol) == false){
                 printBoard();
-                System.out.println("it is not valid move... ");
+                System.out.println("it is not a valid move... ");
                 continue;
             }
 
@@ -125,11 +125,11 @@ class StartPuzzle{
         
     }
 
-    private boolean isValidMove(int newRow, int newCol){
+    private boolean isValidMove(int newRow, int newCol){  // checking given row and column is possible or not
         return (newRow >= 0 && newRow < rowSize && newCol >= 0 && newCol < colSize);
     }
 
-    private int correctMove(String move){
+    private int getStepIndex(String move){  // it returns index of the row and column to move up or down or left or right
         if (move.equals("up")){
             return 0;
         }else if (move.equals("down")){
@@ -141,7 +141,7 @@ class StartPuzzle{
         }
     }
 
-    private boolean isinputCorrect(String move){
+    private boolean isinputCorrect(String move){   // checking the input name is correct or not
 
         if (move.equals("up") || move.equals("down") || move.equals("left") || move.equals("right")){
             return true;
