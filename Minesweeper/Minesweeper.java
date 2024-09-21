@@ -1,12 +1,12 @@
 import java.util.*;
 
 class PlayGame{
-    private static int rowSize = 10; 
-    private static int colSize = 10;
-    private static int totalMines = 8; 
-    private static char emptyCells = '.';
-    private static char mine = '*';
-    private static char flag = 'F';
+    private int rowSize = 10; 
+    private int colSize = 10;
+    private int totalMines = 8; 
+    private char emptyCells = '.';
+    private char mine = '*';
+    private char flag = 'F';
 
     private boolean[][] minesPositions;
     private boolean[][] revealedPositions;
