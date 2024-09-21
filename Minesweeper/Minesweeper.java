@@ -1,19 +1,24 @@
+
+
+
+
 import java.util.*;
 
-class PlayGame{
+class MinesweeperGame{
     private int rowSize = 10; 
     private int colSize = 10;
     private int totalMines = 8; 
     private char emptyCells = '.';
     private char mine = '*';
     private char flag = 'F';
+    private int remaingFlags = totalMines;
 
     private boolean[][] minesPositions;
     private boolean[][] revealedPositions;
     private boolean[][] flaggedPositions;
     private boolean gameOver;
 
-    public PlayGame() {
+    public MinesweeperGame() {
         minesPositions = new boolean[rowSize][colSize];
         revealedPositions = new boolean[rowSize][colSize];
         flaggedPositions = new boolean[rowSize][colSize];
@@ -73,6 +78,8 @@ class PlayGame{
     }
 
     private void printBoard() {
+        System.out.println();
+        System.out.println("Tatal Ramaing Flags : " + remaingFlags);
         System.out.println();
         System.out.printf("%3s", " ");
         for (int col = 0; col < colSize; col++) {
@@ -149,9 +156,14 @@ class PlayGame{
             return;
         }
         flaggedPositions[x][y] = (flaggedPositions[x][y] == false);
+        if (flaggedPositions[x][y] == true){
+            remaingFlags -= 1;
+        }else{
+            remaingFlags += 1;
+        }
     }
 
-    public void playerInput(){
+    public void playGame(){
         Scanner scanner = new Scanner(System.in);
         while (gameOver == false && checkWins() == false) {
 
@@ -163,7 +175,6 @@ class PlayGame{
         }
 
         if (gameOver) {
-            printBoard();
             System.out.println("Game Over! You hit a mine.");
         }else{
             System.out.println("Heh!!! You Win. Placed all the flags perfectly!");
@@ -178,8 +189,8 @@ class PlayGame{
 public class Minesweeper {
 
     public static void main(String[] args){
-        PlayGame playGame = new PlayGame();
-        playGame.playerInput();
+        MinesweeperGame minesweeperGame = new MinesweeperGame();
+        minesweeperGame.playGame();
     }
 
 }

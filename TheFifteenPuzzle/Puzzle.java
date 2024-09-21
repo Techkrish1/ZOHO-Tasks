@@ -1,10 +1,44 @@
+/*
+It also works for n puzzle (8puzzle, 6puzzle, etc) by adjustiong the input board.
+Following are the actual game reference. And here, Empty tile denoted as 0.
+----------------------
+ |  1|  2|  3|  4|
+ |  5|  6|  0|  8|
+ |  9| 10|  7| 11|
+ | 13| 14| 15| 12|    
+----------------------
+---> Type any one UP /DOWN /LEFT /RIGHT: down
+----------------------
+ |  1|  2|  3|  4|    
+ |  5|  6|  7|  8|    
+ |  9| 10|  0| 11|
+ | 13| 14| 15| 12|
+----------------------
+---> Type any one UP /DOWN /LEFT /RIGHT: right
+----------------------
+ |  1|  2|  3|  4|
+ |  5|  6|  7|  8|
+ |  9| 10| 11|  0|
+ | 13| 14| 15| 12|
+----------------------
+---> Type any one UP /DOWN /LEFT /RIGHT: down
+----------------------
+ |  1|  2|  3|  4|
+ |  5|  6|  7|  8|
+ |  9| 10| 11| 12|
+ | 13| 14| 15|  0|
+----------------------
+Hey!!! You are win!
+ */
+
+
 import java.util.*;
 class StartPuzzle{
     private int[][] inputBoard;
-    private static int[] rowMoves = {-1, 1, 0, 0}; // up, down , left, right for row index
-    private static int[] colMoves = {0, 0, -1, 1};// up, down , left, right for column index
-    private static int rowSize;
-    private static int colSize;
+    private int[] rowMoves = {-1, 1, 0, 0}; // up, down , left, right for row index
+    private int[] colMoves = {0, 0, -1, 1};// up, down , left, right for column index
+    private int rowSize;
+    private int colSize;
     private int emptyTileRow;
     private int emptyTileCol;
     
