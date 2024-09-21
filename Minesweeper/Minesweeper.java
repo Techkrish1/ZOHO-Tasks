@@ -88,12 +88,12 @@ Game Over! You hit a mine.
 import java.util.*;
 
 class MinesweeperGame{
-    private int rowSize = 10; 
-    private int colSize = 10;
-    private int totalMines = 9; 
-    private char emptyCells = '.';
-    private char mine = 'M';
-    private char flag = 'F';
+    private final int rowSize = 10; 
+    private final int colSize = 10;
+    private final int totalMines = 9; 
+    private final char emptyCells = '.';
+    private final char mine = 'M';
+    private final char flag = 'F';
     private int remainingFlags = totalMines;
 
     private boolean[][] minesPositions;
@@ -131,7 +131,7 @@ class MinesweeperGame{
         }
     }
 
-    private void startGame(String input){
+    private void startGame(String input){    // Starting the game and Validations handled for each input
         String[] parts = input.split(" ");
         if (parts.length < 3 || parts.length > 3) {
             System.out.println("Invalid input and don't put extra space. Use format: 'action row column'");
@@ -189,7 +189,7 @@ class MinesweeperGame{
         System.out.println();
     }
 
-    private boolean checkWins(){
+    private boolean checkWins(){   // checking whether the player placed all the flags in the mine positions or not
         for (int row = 0; row < rowSize; row++) {
             for (int col = 0; col < colSize; col++) {
                 if (minesPositions[row][col]) {
@@ -203,7 +203,7 @@ class MinesweeperGame{
 
     }
 
-    private int countMines(int x, int y){
+    private int countMines(int x, int y){   // Counts the no of mines around that cell
         int count = 0;
         for (int row = x - 1; row <= x + 1; row++) {
             for (int col = y - 1; col <= y + 1; col++) {
@@ -222,10 +222,10 @@ class MinesweeperGame{
         revealedPositions[x][y] = true;
         if (minesPositions[x][y]) {
             gameOver = true;
-            revealAllMines();
+            revealAllMines(); // to reveal all the mines
             return;
         }
-        if (countMines(x, y) == 0) {
+        if (countMines(x, y) == 0) {      // here contMines > 0 then we can know that there is a mine around that cell so we have to stop. because further moves lead to reveal the mine thet time game will over
             for (int row = x - 1; row <= x + 1; row++) {
                 for (int col = y - 1; col <= y + 1; col++) {
                     reveal(row, col);
@@ -247,7 +247,7 @@ class MinesweeperGame{
         }
     }
 
-    private void revealAllMines(){
+    private void revealAllMines(){  // Only runs if player hit a mine then it will reveal all the mines
         for (int row = 0; row < rowSize; row++) {
             for (int col = 0; col < colSize; col++) {
                 if ((minesPositions[row][col] == true) && (flaggedPositions[row][col] == false))
