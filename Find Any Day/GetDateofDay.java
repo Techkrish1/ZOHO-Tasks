@@ -35,7 +35,6 @@ April Month calendar
          Scanner input = new Scanner(System.in);
          System.out.print("Enter the Date (DD/MM/YYYY) : ");
          String inputDate = input.next();
-         MyCalendar myCalendar;
  
          String[] parts = inputDate.split("/"); // It seperates date into 3 parts (date, month, year)
          if (parts.length == 3){
@@ -44,7 +43,7 @@ April Month calendar
                  int _month = Integer.parseInt(parts[1]);
                  int _year = Integer.parseInt(parts[2]);
  
-                 myCalendar = new MyCalendar(_date, _month, _year);
+                 MyCalendar myCalendar = new MyCalendar(_date, _month, _year);
                  myCalendar.printDayOfMonth();
                  myCalendar.printDayOfWeek();
              }catch (NumberFormatException e){

@@ -1,9 +1,9 @@
 
 class MyCalendar{
 
-    private int date;
-    private int month;
-    private int year;
+    private final int date;
+    private final int month;
+    private final int year;
     private int[] noOfDaysInMonth = {31, 28, 31,30, 31, 30, 31, 31, 30, 31, 30, 31};
     private final String[] monthName = {"January", "February", "March", "April", "May", "June", "July", "August", "Septempber", "October","November", "December"};
     private final String[] nameOfTheDay = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
